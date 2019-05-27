@@ -1,0 +1,1777 @@
+C:\xampp\mysql>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 0A2F-2202
+
+ Directory of C:\xampp\mysql
+
+05/21/2019  05:16 PM    <DIR>          .
+05/21/2019  05:16 PM    <DIR>          ..
+05/21/2019  05:16 PM    <DIR>          backup
+05/21/2019  05:19 PM    <DIR>          bin
+05/07/2019  01:49 PM            17,987 COPYING
+05/07/2019  01:49 PM            86,263 COPYING.thirdparty
+05/07/2019  01:49 PM             2,354 CREDITS
+05/26/2019  02:31 PM    <DIR>          data
+05/07/2019  01:49 PM             8,245 EXCEPTIONS-CLIENT
+05/07/2019  03:36 PM             5,057 my-huge.ini
+05/07/2019  03:36 PM            20,909 my-innodb-heavy-4G.ini
+05/07/2019  03:36 PM             5,044 my-large.ini
+05/07/2019  03:36 PM             5,055 my-medium.ini
+05/07/2019  03:36 PM             2,921 my-small.ini
+03/30/2013  05:29 AM               848 mysql_installservice.bat
+03/30/2013  05:29 AM               395 mysql_uninstallservice.bat
+05/07/2019  01:49 PM             2,196 README
+03/30/2013  05:29 AM             1,105 resetroot.bat
+05/21/2019  05:16 PM    <DIR>          scripts
+05/21/2019  05:16 PM    <DIR>          share
+              13 File(s)        158,379 bytes
+               7 Dir(s)  167,377,739,776 bytes free
+
+C:\xampp\mysql>cd bin
+
+C:\xampp\mysql\bin>mysql
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 18
+Server version: 10.1.40-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> exit
+Bye
+
+C:\xampp\mysql\bin>mysql -u root;
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 19
+Server version: 10.1.40-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use table;
+ERROR 1044 (42000): Access denied for user ''@'localhost' to database 'table'
+MariaDB [(none)]> use test;
+Database changed
+MariaDB [test]> show test;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'test' at line 1
+MariaDB [test]> show tables;
+Empty set (0.00 sec)
+
+MariaDB [test]> CREATE TABLE cats
+    ->   (
+    ->      cat_id INT NOT NULL AUTO_INCREMENT,
+    ->      name   VARCHAR(100),
+    ->      breed  VARCHAR(100),
+    ->      age    INT,
+    ->      PRIMARY KEY (cat_id)
+    ->   );
+Query OK, 0 rows affected (0.16 sec)
+
+MariaDB [test]> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [test]> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| cats           |
++----------------+
+1 row in set (0.00 sec)
+
+MariaDB [test]> INSERT INTO cats(name, breed, age)
+    -> VALUES ('Ringo', 'Tabby', 4),
+    ->        ('Cindy', 'Maine Coon', 10),
+    ->        ('Dumbledore', 'Maine Coon', 11),
+    ->        ('Egg', 'Persian', 4),
+    ->        ('Misty', 'Tabby', 13),
+    ->        ('George Michael', 'Ragdoll', 9),
+    ->        ('Jackson', 'Sphynx', 7);
+Query OK, 7 rows affected (0.02 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+MariaDB [test]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      1 | Ringo          | Tabby      |    4 |
+|      2 | Cindy          | Maine Coon |   10 |
+|      3 | Dumbledore     | Maine Coon |   11 |
+|      4 | Egg            | Persian    |    4 |
+|      5 | Misty          | Tabby      |   13 |
+|      6 | George Michael | Ragdoll    |    9 |
+|      7 | Jackson        | Sphynx     |    7 |
++--------+----------------+------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> select name from cats;
++----------------+
+| name           |
++----------------+
+| Ringo          |
+| Cindy          |
+| Dumbledore     |
+| Egg            |
+| Misty          |
+| George Michael |
+| Jackson        |
++----------------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> select age from cats;
++------+
+| age  |
++------+
+|    4 |
+|   10 |
+|   11 |
+|    4 |
+|   13 |
+|    9 |
+|    7 |
++------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> seelct name,age from cats;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'seelct name,age from cats' at line 1
+MariaDB [test]> select name,age from cats;
++----------------+------+
+| name           | age  |
++----------------+------+
+| Ringo          |    4 |
+| Cindy          |   10 |
+| Dumbledore     |   11 |
+| Egg            |    4 |
+| Misty          |   13 |
+| George Michael |    9 |
+| Jackson        |    7 |
++----------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> select * from cats where age=4;
++--------+-------+---------+------+
+| cat_id | name  | breed   | age  |
++--------+-------+---------+------+
+|      1 | Ringo | Tabby   |    4 |
+|      4 | Egg   | Persian |    4 |
++--------+-------+---------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [test]> select cat_id from cats;
++--------+
+| cat_id |
++--------+
+|      1 |
+|      2 |
+|      3 |
+|      4 |
+|      5 |
+|      6 |
+|      7 |
++--------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> select name,breed from cats;
++----------------+------------+
+| name           | breed      |
++----------------+------------+
+| Ringo          | Tabby      |
+| Cindy          | Maine Coon |
+| Dumbledore     | Maine Coon |
+| Egg            | Persian    |
+| Misty          | Tabby      |
+| George Michael | Ragdoll    |
+| Jackson        | Sphynx     |
++----------------+------------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> select name,age from cats where breed="tabby";
++-------+------+
+| name  | age  |
++-------+------+
+| Ringo |    4 |
+| Misty |   13 |
++-------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [test]> select cat_id,age from cats where cat_id=age;
++--------+------+
+| cat_id | age  |
++--------+------+
+|      4 |    4 |
+|      7 |    7 |
++--------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [test]> select cat_id as id,name from cats;
++----+----------------+
+| id | name           |
++----+----------------+
+|  1 | Ringo          |
+|  2 | Cindy          |
+|  3 | Dumbledore     |
+|  4 | Egg            |
+|  5 | Misty          |
+|  6 | George Michael |
+|  7 | Jackson        |
++----+----------------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> update cats set breed='shorthair' where breed='tabby';
+Query OK, 2 rows affected (0.05 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [test]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      1 | Ringo          | shorthair  |    4 |
+|      2 | Cindy          | Maine Coon |   10 |
+|      3 | Dumbledore     | Maine Coon |   11 |
+|      4 | Egg            | Persian    |    4 |
+|      5 | Misty          | shorthair  |   13 |
+|      6 | George Michael | Ragdoll    |    9 |
+|      7 | Jackson        | Sphynx     |    7 |
++--------+----------------+------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> update cats set age=14 where name='misty';
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [test]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      1 | Ringo          | shorthair  |    4 |
+|      2 | Cindy          | Maine Coon |   10 |
+|      3 | Dumbledore     | Maine Coon |   11 |
+|      4 | Egg            | Persian    |    4 |
+|      5 | Misty          | shorthair  |   14 |
+|      6 | George Michael | Ragdoll    |    9 |
+|      7 | Jackson        | Sphynx     |    7 |
++--------+----------------+------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> update cats set name='jack' where name='jackson';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [test]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      1 | Ringo          | shorthair  |    4 |
+|      2 | Cindy          | Maine Coon |   10 |
+|      3 | Dumbledore     | Maine Coon |   11 |
+|      4 | Egg            | Persian    |    4 |
+|      5 | Misty          | shorthair  |   14 |
+|      6 | George Michael | Ragdoll    |    9 |
+|      7 | jack           | Sphynx     |    7 |
++--------+----------------+------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> update cats set breed='british shorthair' where name='ringo';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [test]> select * from cats;
++--------+----------------+-------------------+------+
+| cat_id | name           | breed             | age  |
++--------+----------------+-------------------+------+
+|      1 | Ringo          | british shorthair |    4 |
+|      2 | Cindy          | Maine Coon        |   10 |
+|      3 | Dumbledore     | Maine Coon        |   11 |
+|      4 | Egg            | Persian           |    4 |
+|      5 | Misty          | shorthair         |   14 |
+|      6 | George Michael | Ragdoll           |    9 |
+|      7 | jack           | Sphynx            |    7 |
++--------+----------------+-------------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> update cats set age=12 where breed='maine coon';
+Query OK, 2 rows affected (0.04 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [test]> select * from cats;
++--------+----------------+-------------------+------+
+| cat_id | name           | breed             | age  |
++--------+----------------+-------------------+------+
+|      1 | Ringo          | british shorthair |    4 |
+|      2 | Cindy          | Maine Coon        |   12 |
+|      3 | Dumbledore     | Maine Coon        |   12 |
+|      4 | Egg            | Persian           |    4 |
+|      5 | Misty          | shorthair         |   14 |
+|      6 | George Michael | Ragdoll           |    9 |
+|      7 | jack           | Sphynx            |    7 |
++--------+----------------+-------------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [test]> delete from cats where name='egg';
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [test]> select * from cats;
++--------+----------------+-------------------+------+
+| cat_id | name           | breed             | age  |
++--------+----------------+-------------------+------+
+|      1 | Ringo          | british shorthair |    4 |
+|      2 | Cindy          | Maine Coon        |   12 |
+|      3 | Dumbledore     | Maine Coon        |   12 |
+|      5 | Misty          | shorthair         |   14 |
+|      6 | George Michael | Ragdoll           |    9 |
+|      7 | jack           | Sphynx            |    7 |
++--------+----------------+-------------------+------+
+6 rows in set (0.00 sec)
+
+MariaDB [test]> delete from cats where age=4;
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [test]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      2 | Cindy          | Maine Coon |   12 |
+|      3 | Dumbledore     | Maine Coon |   12 |
+|      5 | Misty          | shorthair  |   14 |
+|      6 | George Michael | Ragdoll    |    9 |
+|      7 | jack           | Sphynx     |    7 |
++--------+----------------+------------+------+
+5 rows in set (0.00 sec)
+
+MariaDB [test]> delect from cats where age=cat_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'delect from cats where age=cat_id' at line 1
+MariaDB [test]> delete from cats where age=cat_id;
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [test]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      2 | Cindy          | Maine Coon |   12 |
+|      3 | Dumbledore     | Maine Coon |   12 |
+|      5 | Misty          | shorthair  |   14 |
+|      6 | George Michael | Ragdoll    |    9 |
++--------+----------------+------------+------+
+4 rows in set (0.00 sec)
+
+MariaDB [test]> create database shirts_id;
+ERROR 1044 (42000): Access denied for user ''@'localhost' to database 'shirts_id'
+MariaDB [test]> create database shirts_db;
+ERROR 1044 (42000): Access denied for user ''@'localhost' to database 'shirts_db'
+MariaDB [test]> show datbases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'datbases' at line 1
+MariaDB [test]> create database shirts_id;
+ERROR 1044 (42000): Access denied for user ''@'localhost' to database 'shirts_id'
+MariaDB [test]> create database shirts_db;
+ERROR 1044 (42000): Access denied for user ''@'localhost' to database 'shirts_db'
+MariaDB [test]> exit
+Bye
+
+C:\xampp\mysql\bin>mysql
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 22
+Server version: 10.1.40-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> exit
+Bye
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 23
+Server version: 10.1.40-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| t                  |
+| table              |
+| test               |
+| tweet table        |
++--------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [(none)]> create database shirts_db;
+Query OK, 1 row affected (0.02 sec)
+
+MariaDB [(none)]> use shirts_db;
+Database changed
+MariaDB [shirts_db]> create table shirts;
+ERROR 1113 (42000): A table must have at least 1 column
+MariaDB [shirts_db]> create table shirts (shirt_id INT NOT NULL AUTO_INCREMENT,artical VARCHAR(100),color VARCHAR(100),shirtsize VARCHAR(100),lost_worn INT(140));
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+MariaDB [shirts_db]> create table shirts (shirt_id INT NOT NULL AUTO_INCREMENT,artical VARCHAR(100),color VARCHAR(100),shirtsize VARCHAR(100),lost_worn INT PRIMARY KEY (shirt_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(shirt_id))' at line 1
+MariaDB [shirts_db]> create table shirts (shirt_id INT NOT NULL AUTO_INCREMENT,artical VARCHAR(100),color VARCHAR(100),shirtsize VARCHAR(100),lost_worn INT, PRIMARY KEY (shirt_id));
+Query OK, 0 rows affected (0.16 sec)
+
+MariaDB [shirts_db]> show tables;
++---------------------+
+| Tables_in_shirts_db |
++---------------------+
+| shirts              |
++---------------------+
+1 row in set (0.00 sec)
+
+MariaDB [shirts_db]> INSERT INTO shirts(artical,color,shirtsize,lost_worn)VALUES('t-shirt','white','s',10),('t-shirt','green','s',200),('polo shirt','black','m',10),('tank top','blue','s',50),('t-shirt','pink','s',0),('polo shirt','red','m',5),('tank top','white','s',200),('tank top', 'blue', 'M', 15);
+Query OK, 8 rows affected (0.05 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+-------+-----------+-----------+
+| shirt_id | artical    | color | shirtsize | lost_worn |
++----------+------------+-------+-----------+-----------+
+|        1 | t-shirt    | white | s         |        10 |
+|        2 | t-shirt    | green | s         |       200 |
+|        3 | polo shirt | black | m         |        10 |
+|        4 | tank top   | blue  | s         |        50 |
+|        5 | t-shirt    | pink  | s         |         0 |
+|        6 | polo shirt | red   | m         |         5 |
+|        7 | tank top   | white | s         |       200 |
+|        8 | tank top   | blue  | M         |        15 |
++----------+------------+-------+-----------+-----------+
+8 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> INSERT INTO shirts(artical,color,shrtsize,lost_worn)VALUES('polo shirt','purple','m',50);
+ERROR 1054 (42S22): Unknown column 'shrtsize' in 'field list'
+MariaDB [shirts_db]> INSERT INTO shirts(artical,color,shirtsize,lost_worn)VALUES('polo shirt','purple','m',50);
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+--------+-----------+-----------+
+| shirt_id | artical    | color  | shirtsize | lost_worn |
++----------+------------+--------+-----------+-----------+
+|        1 | t-shirt    | white  | s         |        10 |
+|        2 | t-shirt    | green  | s         |       200 |
+|        3 | polo shirt | black  | m         |        10 |
+|        4 | tank top   | blue   | s         |        50 |
+|        5 | t-shirt    | pink   | s         |         0 |
+|        6 | polo shirt | red    | m         |         5 |
+|        7 | tank top   | white  | s         |       200 |
+|        8 | tank top   | blue   | M         |        15 |
+|        9 | polo shirt | purple | m         |        50 |
++----------+------------+--------+-----------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> select artical,color from shirts;
++------------+--------+
+| artical    | color  |
++------------+--------+
+| t-shirt    | white  |
+| t-shirt    | green  |
+| polo shirt | black  |
+| tank top   | blue   |
+| t-shirt    | pink   |
+| polo shirt | red    |
+| tank top   | white  |
+| tank top   | blue   |
+| polo shirt | purple |
++------------+--------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> select shirtsize='m' from shirts;
++---------------+
+| shirtsize='m' |
++---------------+
+|             0 |
+|             0 |
+|             1 |
+|             0 |
+|             0 |
+|             1 |
+|             0 |
+|             1 |
+|             1 |
++---------------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> select * from shirts where shirtsize='m';
++----------+------------+--------+-----------+-----------+
+| shirt_id | artical    | color  | shirtsize | lost_worn |
++----------+------------+--------+-----------+-----------+
+|        3 | polo shirt | black  | m         |        10 |
+|        6 | polo shirt | red    | m         |         5 |
+|        8 | tank top   | blue   | M         |        15 |
+|        9 | polo shirt | purple | m         |        50 |
++----------+------------+--------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> update shirts set shirtsize='l' where artical='poloshirt';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+--------+-----------+-----------+
+| shirt_id | artical    | color  | shirtsize | lost_worn |
++----------+------------+--------+-----------+-----------+
+|        1 | t-shirt    | white  | s         |        10 |
+|        2 | t-shirt    | green  | s         |       200 |
+|        3 | polo shirt | black  | m         |        10 |
+|        4 | tank top   | blue   | s         |        50 |
+|        5 | t-shirt    | pink   | s         |         0 |
+|        6 | polo shirt | red    | m         |         5 |
+|        7 | tank top   | white  | s         |       200 |
+|        8 | tank top   | blue   | M         |        15 |
+|        9 | polo shirt | purple | m         |        50 |
++----------+------------+--------+-----------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> update shirts set shirtsize='L' where artical='polo shirt';
+Query OK, 3 rows affected (0.15 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+--------+-----------+-----------+
+| shirt_id | artical    | color  | shirtsize | lost_worn |
++----------+------------+--------+-----------+-----------+
+|        1 | t-shirt    | white  | s         |        10 |
+|        2 | t-shirt    | green  | s         |       200 |
+|        3 | polo shirt | black  | L         |        10 |
+|        4 | tank top   | blue   | s         |        50 |
+|        5 | t-shirt    | pink   | s         |         0 |
+|        6 | polo shirt | red    | L         |         5 |
+|        7 | tank top   | white  | s         |       200 |
+|        8 | tank top   | blue   | M         |        15 |
+|        9 | polo shirt | purple | L         |        50 |
++----------+------------+--------+-----------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> update shirts set last_worn='0' where lost_worn='15';
+ERROR 1054 (42S22): Unknown column 'last_worn' in 'field list'
+MariaDB [shirts_db]> update shirts set lost_worn='0' where lost_worn='15';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+--------+-----------+-----------+
+| shirt_id | artical    | color  | shirtsize | lost_worn |
++----------+------------+--------+-----------+-----------+
+|        1 | t-shirt    | white  | s         |        10 |
+|        2 | t-shirt    | green  | s         |       200 |
+|        3 | polo shirt | black  | L         |        10 |
+|        4 | tank top   | blue   | s         |        50 |
+|        5 | t-shirt    | pink   | s         |         0 |
+|        6 | polo shirt | red    | L         |         5 |
+|        7 | tank top   | white  | s         |       200 |
+|        8 | tank top   | blue   | M         |         0 |
+|        9 | polo shirt | purple | L         |        50 |
++----------+------------+--------+-----------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> update shirts set shirtsize='xs' where color='white';
+Query OK, 2 rows affected (0.04 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+--------+-----------+-----------+
+| shirt_id | artical    | color  | shirtsize | lost_worn |
++----------+------------+--------+-----------+-----------+
+|        1 | t-shirt    | white  | xs        |        10 |
+|        2 | t-shirt    | green  | s         |       200 |
+|        3 | polo shirt | black  | L         |        10 |
+|        4 | tank top   | blue   | s         |        50 |
+|        5 | t-shirt    | pink   | s         |         0 |
+|        6 | polo shirt | red    | L         |         5 |
+|        7 | tank top   | white  | xs        |       200 |
+|        8 | tank top   | blue   | M         |         0 |
+|        9 | polo shirt | purple | L         |        50 |
++----------+------------+--------+-----------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> update shirts set color='off white' where color='white';
+Query OK, 2 rows affected (0.04 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+-----------+-----------+-----------+
+| shirt_id | artical    | color     | shirtsize | lost_worn |
++----------+------------+-----------+-----------+-----------+
+|        1 | t-shirt    | off white | xs        |        10 |
+|        2 | t-shirt    | green     | s         |       200 |
+|        3 | polo shirt | black     | L         |        10 |
+|        4 | tank top   | blue      | s         |        50 |
+|        5 | t-shirt    | pink      | s         |         0 |
+|        6 | polo shirt | red       | L         |         5 |
+|        7 | tank top   | off white | xs        |       200 |
+|        8 | tank top   | blue      | M         |         0 |
+|        9 | polo shirt | purple    | L         |        50 |
++----------+------------+-----------+-----------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> delete from shirts where lost_worn='200';
+Query OK, 2 rows affected (0.04 sec)
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+-----------+-----------+-----------+
+| shirt_id | artical    | color     | shirtsize | lost_worn |
++----------+------------+-----------+-----------+-----------+
+|        1 | t-shirt    | off white | xs        |        10 |
+|        3 | polo shirt | black     | L         |        10 |
+|        4 | tank top   | blue      | s         |        50 |
+|        5 | t-shirt    | pink      | s         |         0 |
+|        6 | polo shirt | red       | L         |         5 |
+|        8 | tank top   | blue      | M         |         0 |
+|        9 | polo shirt | purple    | L         |        50 |
++----------+------------+-----------+-----------+-----------+
+7 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> delete from shirts where artical='tank top';
+Query OK, 2 rows affected (0.13 sec)
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+-----------+-----------+-----------+
+| shirt_id | artical    | color     | shirtsize | lost_worn |
++----------+------------+-----------+-----------+-----------+
+|        1 | t-shirt    | off white | xs        |        10 |
+|        3 | polo shirt | black     | L         |        10 |
+|        5 | t-shirt    | pink      | s         |         0 |
+|        6 | polo shirt | red       | L         |         5 |
+|        9 | polo shirt | purple    | L         |        50 |
++----------+------------+-----------+-----------+-----------+
+5 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> create table names(author_fname VARCHAR(100),author_lname VARCHAR(100));
+Query OK, 0 rows affected (0.33 sec)
+
+MariaDB [shirts_db]> SHOW TABLES;
++---------------------+
+| Tables_in_shirts_db |
++---------------------+
+| names               |
+| shirts              |
++---------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> CONCAT (author_fname,author_lname);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'CONCAT (author_fname,author_lname)' at line 1
+MariaDB [shirts_db]> CONCAT (author_fname,author_lname) from names;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'CONCAT (author_fname,author_lname) from names' at line 1
+MariaDB [shirts_db]> select from names CONCAT (author_fname,author_lname);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from names CONCAT (author_fname,author_lname)' at line 1
+MariaDB [shirts_db]> use table;
+Database changed
+MariaDB [table]> select * from books;
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname   | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+|       1 | The Namesake                                        | Jhumpa       | Lahiri         |          2003 |             32 |   291 |
+|       2 | Norse Mythology                                     | Neil         | Gaiman         |          2016 |             43 |   304 |
+|       3 | American Gods                                       | Neil         | Gaiman         |          2001 |             12 |   465 |
+|       4 | Interpreter of Maladies                             | Jhumpa       | Lahiri         |          1996 |             97 |   198 |
+|       5 | A Hologram for the King: A Novel                    | Dave         | Eggers         |          2012 |            154 |   352 |
+|       6 | The Circle                                          | Dave         | Eggers         |          2013 |             26 |   504 |
+|       7 | The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |          2000 |             68 |   634 |
+|       8 | Just Kids                                           | Patti        | Smith          |          2010 |             55 |   304 |
+|       9 | A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |          2001 |            104 |   437 |
+|      10 | Coraline                                            | Neil         | Gaiman         |          2003 |            100 |   208 |
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |          1981 |             23 |   176 |
+|      12 | Where I'm Calling From: Selected Stories            | Raymond      | Carver         |          1989 |             12 |   526 |
+|      13 | White Noise                                         | Don          | DeLillo        |          1985 |             49 |   320 |
+|      14 | Cannery Row                                         | John         | Steinbeck      |          1945 |             95 |   181 |
+|      15 | Oblivion: Stories                                   | David        | Foster Wallace |          2004 |            172 |   329 |
+|      16 | Consider the Lobster                                | David        | Foster Wallace |          2005 |             92 |   343 |
+|      17 | The Namesake                                        | Jhumpa       | Lahiri         |          2003 |             32 |   291 |
+|      18 | Norse Mythology                                     | Neil         | Gaiman         |          2016 |             43 |   304 |
+|      19 | American Gods                                       | Neil         | Gaiman         |          2001 |             12 |   465 |
+|      20 | Interpreter of Maladies                             | Jhumpa       | Lahiri         |          1996 |             97 |   198 |
+|      21 | A Hologram for the King: A Novel                    | Dave         | Eggers         |          2012 |            154 |   352 |
+|      22 | The Circle                                          | Dave         | Eggers         |          2013 |             26 |   504 |
+|      23 | The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |          2000 |             68 |   634 |
+|      24 | Just Kids                                           | Patti        | Smith          |          2010 |             55 |   304 |
+|      25 | A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |          2001 |            104 |   437 |
+|      26 | Coraline                                            | Neil         | Gaiman         |          2003 |            100 |   208 |
+|      27 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |          1981 |             23 |   176 |
+|      28 | Where I'm Calling From: Selected Stories            | Raymond      | Carver         |          1989 |             12 |   526 |
+|      29 | White Noise                                         | Don          | DeLillo        |          1985 |             49 |   320 |
+|      30 | Cannery Row                                         | John         | Steinbeck      |          1945 |             95 |   181 |
+|      31 | Oblivion: Stories                                   | David        | Foster Wallace |          2004 |            172 |   329 |
+|      32 | Consider the Lobster                                | David        | Foster Wallace |          2005 |             92 |   343 |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+32 rows in set (0.02 sec)
+
+MariaDB [table]> select author_fname,author_lname from books;
++--------------+----------------+
+| author_fname | author_lname   |
++--------------+----------------+
+| Jhumpa       | Lahiri         |
+| Neil         | Gaiman         |
+| Neil         | Gaiman         |
+| Jhumpa       | Lahiri         |
+| Dave         | Eggers         |
+| Dave         | Eggers         |
+| Michael      | Chabon         |
+| Patti        | Smith          |
+| Dave         | Eggers         |
+| Neil         | Gaiman         |
+| Raymond      | Carver         |
+| Raymond      | Carver         |
+| Don          | DeLillo        |
+| John         | Steinbeck      |
+| David        | Foster Wallace |
+| David        | Foster Wallace |
+| Jhumpa       | Lahiri         |
+| Neil         | Gaiman         |
+| Neil         | Gaiman         |
+| Jhumpa       | Lahiri         |
+| Dave         | Eggers         |
+| Dave         | Eggers         |
+| Michael      | Chabon         |
+| Patti        | Smith          |
+| Dave         | Eggers         |
+| Neil         | Gaiman         |
+| Raymond      | Carver         |
+| Raymond      | Carver         |
+| Don          | DeLillo        |
+| John         | Steinbeck      |
+| David        | Foster Wallace |
+| David        | Foster Wallace |
++--------------+----------------+
+32 rows in set (0.00 sec)
+
+MariaDB [table]> select CONCAT(author_fname,'',author_lname) from books;
++--------------------------------------+
+| CONCAT(author_fname,'',author_lname) |
++--------------------------------------+
+| JhumpaLahiri                         |
+| NeilGaiman                           |
+| NeilGaiman                           |
+| JhumpaLahiri                         |
+| DaveEggers                           |
+| DaveEggers                           |
+| MichaelChabon                        |
+| PattiSmith                           |
+| DaveEggers                           |
+| NeilGaiman                           |
+| RaymondCarver                        |
+| RaymondCarver                        |
+| DonDeLillo                           |
+| JohnSteinbeck                        |
+| DavidFoster Wallace                  |
+| DavidFoster Wallace                  |
+| JhumpaLahiri                         |
+| NeilGaiman                           |
+| NeilGaiman                           |
+| JhumpaLahiri                         |
+| DaveEggers                           |
+| DaveEggers                           |
+| MichaelChabon                        |
+| PattiSmith                           |
+| DaveEggers                           |
+| NeilGaiman                           |
+| RaymondCarver                        |
+| RaymondCarver                        |
+| DonDeLillo                           |
+| JohnSteinbeck                        |
+| DavidFoster Wallace                  |
+| DavidFoster Wallace                  |
++--------------------------------------+
+32 rows in set (0.00 sec)
+
+MariaDB [table]> select CONCAT_WS('-',title,author_fname,author_lname)from books;
++--------------------------------------------------------------------+
+| CONCAT_WS('-',title,author_fname,author_lname)                     |
++--------------------------------------------------------------------+
+| The Namesake-Jhumpa-Lahiri                                         |
+| Norse Mythology-Neil-Gaiman                                        |
+| American Gods-Neil-Gaiman                                          |
+| Interpreter of Maladies-Jhumpa-Lahiri                              |
+| A Hologram for the King: A Novel-Dave-Eggers                       |
+| The Circle-Dave-Eggers                                             |
+| The Amazing Adventures of Kavalier & Clay-Michael-Chabon           |
+| Just Kids-Patti-Smith                                              |
+| A Heartbreaking Work of Staggering Genius-Dave-Eggers              |
+| Coraline-Neil-Gaiman                                               |
+| What We Talk About When We Talk About Love: Stories-Raymond-Carver |
+| Where I'm Calling From: Selected Stories-Raymond-Carver            |
+| White Noise-Don-DeLillo                                            |
+| Cannery Row-John-Steinbeck                                         |
+| Oblivion: Stories-David-Foster Wallace                             |
+| Consider the Lobster-David-Foster Wallace                          |
+| The Namesake-Jhumpa-Lahiri                                         |
+| Norse Mythology-Neil-Gaiman                                        |
+| American Gods-Neil-Gaiman                                          |
+| Interpreter of Maladies-Jhumpa-Lahiri                              |
+| A Hologram for the King: A Novel-Dave-Eggers                       |
+| The Circle-Dave-Eggers                                             |
+| The Amazing Adventures of Kavalier & Clay-Michael-Chabon           |
+| Just Kids-Patti-Smith                                              |
+| A Heartbreaking Work of Staggering Genius-Dave-Eggers              |
+| Coraline-Neil-Gaiman                                               |
+| What We Talk About When We Talk About Love: Stories-Raymond-Carver |
+| Where I'm Calling From: Selected Stories-Raymond-Carver            |
+| White Noise-Don-DeLillo                                            |
+| Cannery Row-John-Steinbeck                                         |
+| Oblivion: Stories-David-Foster Wallace                             |
+| Consider the Lobster-David-Foster Wallace                          |
++--------------------------------------------------------------------+
+32 rows in set (0.00 sec)
+
+MariaDB [table]> select SUBSTRING('helloworld',1,4);
++-----------------------------+
+| SUBSTRING('helloworld',1,4) |
++-----------------------------+
+| hell                        |
++-----------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select SUBSTRING('helloworld',7);
++---------------------------+
+| SUBSTRING('helloworld',7) |
++---------------------------+
+| orld                      |
++---------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select SUBSTRING('helloworld',-3);
++----------------------------+
+| SUBSTRING('helloworld',-3) |
++----------------------------+
+| rld                        |
++----------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select SUBSTRING('helloworld',-5);
++----------------------------+
+| SUBSTRING('helloworld',-5) |
++----------------------------+
+| world                      |
++----------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select REPLACE('helloworld','hello','#$@^&');
++---------------------------------------+
+| REPLACE('helloworld','hello','#$@^&') |
++---------------------------------------+
+| #$@^&world                            |
++---------------------------------------+
+1 row in set (0.02 sec)
+
+MariaDB [table]> select REVERSE('HELLOWORLD');
++-----------------------+
+| REVERSE('HELLOWORLD') |
++-----------------------+
+| DLROWOLLEH            |
++-----------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> SELECT CHAR_LENGTH('helloworld');
++---------------------------+
+| CHAR_LENGTH('helloworld') |
++---------------------------+
+|                        10 |
++---------------------------+
+1 row in set (0.02 sec)
+
+MariaDB [table]> select UPPER('hello world');
++----------------------+
+| UPPER('hello world') |
++----------------------+
+| HELLO WORLD          |
++----------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select LOWER('hello world');
++----------------------+
+| LOWER('hello world') |
++----------------------+
+| hello world          |
++----------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select REVERSE(upper("Why does my cat look at me with such hatred?"));
++----------------------------------------------------------------+
+| REVERSE(upper("Why does my cat look at me with such hatred?")) |
++----------------------------------------------------------------+
+| ?DERTAH HCUS HTIW EM TA KOOL TAC YM SEOD YHW                   |
++----------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> SELECT
+    ->   REPLACE
+    ->   (
+    ->   CONCAT('I', ' ', 'like', ' ', 'cats'),
+    ->   ' ',
+    ->   '-'
+    ->   );
++-----------------------------------------------------------------------+
+| REPLACE
+  (
+  CONCAT('I', ' ', 'like', ' ', 'cats'),
+  ' ',
+  '-'
+  ) |
++-----------------------------------------------------------------------+
+| I-like-cats                                                           |
++-----------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select replace(title,' ','->')from books;
++--------------------------------------------------------------+
+| replace(title,' ','->')                                      |
++--------------------------------------------------------------+
+| The->Namesake                                                |
+| Norse->Mythology                                             |
+| American->Gods                                               |
+| Interpreter->of->Maladies                                    |
+| A->Hologram->for->the->King:->A->Novel                       |
+| The->Circle                                                  |
+| The->Amazing->Adventures->of->Kavalier->&->Clay              |
+| Just->Kids                                                   |
+| A->Heartbreaking->Work->of->Staggering->Genius               |
+| Coraline                                                     |
+| What->We->Talk->About->When->We->Talk->About->Love:->Stories |
+| Where->I'm->Calling->From:->Selected->Stories                |
+| White->Noise                                                 |
+| Cannery->Row                                                 |
+| Oblivion:->Stories                                           |
+| Consider->the->Lobster                                       |
+| The->Namesake                                                |
+| Norse->Mythology                                             |
+| American->Gods                                               |
+| Interpreter->of->Maladies                                    |
+| A->Hologram->for->the->King:->A->Novel                       |
+| The->Circle                                                  |
+| The->Amazing->Adventures->of->Kavalier->&->Clay              |
+| Just->Kids                                                   |
+| A->Heartbreaking->Work->of->Staggering->Genius               |
+| Coraline                                                     |
+| What->We->Talk->About->When->We->Talk->About->Love:->Stories |
+| Where->I'm->Calling->From:->Selected->Stories                |
+| White->Noise                                                 |
+| Cannery->Row                                                 |
+| Oblivion:->Stories                                           |
+| Consider->the->Lobster                                       |
++--------------------------------------------------------------+
+32 rows in set (0.00 sec)
+
+MariaDB [table]> select author_lname as forwards,reverse(author_lname)as backwards from books;
++----------------+----------------+
+| forwards       | backwards      |
++----------------+----------------+
+| Lahiri         | irihaL         |
+| Gaiman         | namiaG         |
+| Gaiman         | namiaG         |
+| Lahiri         | irihaL         |
+| Eggers         | sreggE         |
+| Eggers         | sreggE         |
+| Chabon         | nobahC         |
+| Smith          | htimS          |
+| Eggers         | sreggE         |
+| Gaiman         | namiaG         |
+| Carver         | revraC         |
+| Carver         | revraC         |
+| DeLillo        | olliLeD        |
+| Steinbeck      | kcebnietS      |
+| Foster Wallace | ecallaW retsoF |
+| Foster Wallace | ecallaW retsoF |
+| Lahiri         | irihaL         |
+| Gaiman         | namiaG         |
+| Gaiman         | namiaG         |
+| Lahiri         | irihaL         |
+| Eggers         | sreggE         |
+| Eggers         | sreggE         |
+| Chabon         | nobahC         |
+| Smith          | htimS          |
+| Eggers         | sreggE         |
+| Gaiman         | namiaG         |
+| Carver         | revraC         |
+| Carver         | revraC         |
+| DeLillo        | olliLeD        |
+| Steinbeck      | kcebnietS      |
+| Foster Wallace | ecallaW retsoF |
+| Foster Wallace | ecallaW retsoF |
++----------------+----------------+
+32 rows in set (0.00 sec)
+
+MariaDB [table]>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
